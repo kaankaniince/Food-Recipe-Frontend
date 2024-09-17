@@ -1,0 +1,27 @@
+.control {
+    display: block;
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+    border-radius: var(--mantine-radius-md);
+    font-weight: 500;
+    color: var(--mantine-color-dark-9);
+    transition: background-color 0.3s ease;
+}
+
+.control:hover {
+    background-color: var(--mantine-color-gray-2);
+}
+
+.rounded {
+    border-radius: 50px;
+}
+
+.signOut {
+    background-color: red;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.signOut:hover {
+    background-color: #ff6666; /* Lighter red hover for Sign Out */
+}
+
