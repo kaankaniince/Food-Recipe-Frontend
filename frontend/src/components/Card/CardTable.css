@@ -1,0 +1,27 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 0 0 23%; /* 4 cards in desktop view */
+    margin: 1%; /* Add some spacing */
+    cursor: pointer;
+
+}
+
+.card:hover {
+    transform: scale(1.02); /* Optional: scale effect on hover */
+}
+
+@media (max-width: 912px) {
+    .card {
+        flex: 0 0 48%; /* 2 cards in mobile view */
+    }
+}
+
+.like {
+    color: var(--mantine-color-red-6);
+    width: 1.25rem; /* 20px / 16px = 1.25rem */
+    height: 1.25rem; /* 20px / 16px = 1.25rem */
+}

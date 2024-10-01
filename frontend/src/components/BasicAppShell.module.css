@@ -3,16 +3,12 @@
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
     border-radius: var(--mantine-radius-md); /* Default border radius for all buttons */
     font-weight: 500;
-    color: var(--mantine-color-dark-9);
+    color: var(--mantine-color-red-9);
     transition: background-color 0.3s ease;
 }
 
 .control:hover {
     background-color: var(--mantine-color-gray-2);
-}
-
-.rounded {
-    border-radius: 50px;
 }
 
 .signOut {

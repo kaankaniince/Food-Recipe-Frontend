@@ -1,0 +1,41 @@
+.card {
+    height: 400px; /* Kart yüksekliği */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* İçeriği aşağıya hizalar */
+    align-items: flex-start; /* İçeriği sola hizalar */
+    background-size: cover;
+    background-position: center;
+    padding: 16px; /* İçeriklerin kenarlara yapışmasını önlemek için padding */
+    position: relative; /* Konumlandırma yapabilmek için relative ekledim */
+}
+
+.title {
+    font-family: Greycliff CF, sans-serif;
+    font-weight: 900;
+    color: var(--mantine-color-white);
+    line-height: 1.2;
+    font-size: 24px; /* Rem değerini px ile değiştirdim */
+    margin-top: var(--mantine-spacing-xs);
+}
+
+@media (max-width: 912px) {
+    .card {
+        padding: 8px; /* Mobilde padding'i küçült */
+    }
+}
+
+.category {
+    color: var(--mantine-color-white);
+    opacity: 0.7;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Read Recipe butonunu sol alt köşeye konumlandırma */
+.card button {
+    position: absolute; /* Butonu konumlandırmak için absolute kullan */
+    bottom: 16px; /* Alt kenardan 16px boşluk bırak */
+    left: 16px; /* Sol kenardan 16px boşluk bırak */
+    align-self: auto; /* Flex hizalamayı etkisiz hale getir */
+}
