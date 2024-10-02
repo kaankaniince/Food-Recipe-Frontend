@@ -24,7 +24,7 @@ function CardTable() {
                     </Group>
                     <Text size="sm" c="dimmed">Description here...</Text>
                     <Group justify="space-between" mt="xs"> {/* Replace position with justify */}
-                        <Group spacing={0} style={{ margin: 0 }}>
+                        <Group style={{ margin: 0 }}>
                             <Avatar
                                 src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
                                 size={24}
