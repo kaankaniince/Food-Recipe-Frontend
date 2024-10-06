@@ -2,14 +2,18 @@ import { Card, Image, Text, Group, ActionIcon, Rating, Avatar } from '@mantine/c
 import { IconHeart } from "@tabler/icons-react";
 import { useState } from "react";
 import './CardTable.css';
+import { useNavigate } from 'react-router-dom';
 
 function CardTable() {
     const [value, setValue] = useState(0);
 
+    const navigate = useNavigate();
+
+
     return (
         <div className="grid">
             {[...Array(8)].map((_, index) => (
-                <Card key={index} className="card" shadow="sm" padding="lg" radius="md" withBorder style={{ position: 'relative' }}>
+                <Card onClick={()=> navigate('/details')} key={index} className="card" shadow="sm" padding="lg" radius="md" withBorder style={{ position: 'relative' }}>
                     <Card.Section>
                         <Image
                             src={index % 2 === 0 ? "https://img.freepik.com/free-photo/photo-delicious-hamburger-isolated-white-background_125540-3378.jpg" : "https://img.freepik.com/free-photo/delicious-fried-chicken-plate_144627-27380.jpg"}

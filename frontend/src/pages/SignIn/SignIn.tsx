@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     TextInput,
     PasswordInput,
@@ -11,13 +12,36 @@ import {
     Button,
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import classes from './SignIn.module.css';
 
 function SignIn() {
     const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleRegister = () => {
         navigate('/register');
+    };
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/auth/login',
+                { email, password },
+                {
+                    withCredentials: true,
+                    headers: { 'Content-Type': 'application/json' }  // Ensure correct headers
+                }
+            );
+
+            if (response.status === 200) {
+                navigate('/'); // Redirect on successful login
+            }
+        } catch (error) {
+            setError('Invalid email or password. Please try again.');
+            console.error('Login error:', error);
+        }
     };
 
     return (
@@ -33,19 +57,38 @@ function SignIn() {
             </Text>
 
             <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-                <TextInput label="Email" placeholder="you@mantine.dev" required />
-                <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+                {error && (
+                    <Text c="red" size="sm" ta="center" mt={5}>
+                        {error}
+                    </Text>
+                )}
+                <TextInput
+                    label="Email"
+                    placeholder="you@mantine.dev"
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.currentTarget.value)}
+                />
+                <PasswordInput
+                    label="Password"
+                    placeholder="Your password"
+                    required
+                    mt="md"
+                    value={password}
+                    onChange={(event) => setPassword(event.currentTarget.value)}
+                />
                 <Group justify="space-between" mt="lg">
                     <Checkbox label="Remember me" />
                     <Anchor component="button" size="sm">
                         Forgot password?
                     </Anchor>
                 </Group>
-                <Button fullWidth mt="xl">
+                <Button fullWidth mt="xl" onClick={handleLogin}>
                     Sign in
                 </Button>
             </Paper>
         </Container>
     );
 }
+
 export default SignIn;
