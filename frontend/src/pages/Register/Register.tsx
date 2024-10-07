@@ -32,7 +32,6 @@ function Register() {
         event.preventDefault();
 
         if (!termsAccepted) {
-            // Handle terms not accepted case
             return alert("You must accept the terms and conditions.");
         }
 

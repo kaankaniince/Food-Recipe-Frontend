@@ -33,6 +33,15 @@
     color: white !important;
 }
 
+.signUp {
+    background-color: var(--mantine-color-green-8) !important;
+    color: white !important;
+}
+
+.signUp:hover {
+    background-color: var(--mantine-color-green-6) !important;
+}
+
 .signIn {
     background-color: var(--mantine-color-blue-6) !important;
     color: white !important;

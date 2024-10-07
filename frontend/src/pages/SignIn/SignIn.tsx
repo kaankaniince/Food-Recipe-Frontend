@@ -13,10 +13,12 @@ import {
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../Context/AuthContext'; // Import the authentication context
 import classes from './SignIn.module.css';
 
 function SignIn() {
     const navigate = useNavigate();
+    const { login } = useAuth(); // Get the login function
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -36,6 +38,7 @@ function SignIn() {
             );
 
             if (response.status === 200) {
+                login(); // Call login function from context
                 navigate('/'); // Redirect on successful login
             }
         } catch (error) {

@@ -24,14 +24,22 @@
     text-align: center;
 }
 
-.signIn {
-    background-color: blue;
+.signUp {
+    background-color: var(--mantine-color-green-8) !important;
     color: white !important;
-    transition: background-color 0.3s ease;
+}
+
+.signUp:hover {
+    background-color: var(--mantine-color-green-6) !important;
+}
+
+.signIn {
+    background-color: var(--mantine-color-blue-6) !important;
+    color: white !important;
 }
 
 .signIn:hover {
-    background-color: #4d94ff;
+    background-color: var(--mantine-color-blue-4) !important;
 }
 
 .signOut {
