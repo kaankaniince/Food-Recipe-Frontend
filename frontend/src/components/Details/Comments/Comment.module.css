@@ -13,3 +13,7 @@
         margin-bottom: 0;
     }
 }
+
+.rating {
+    margin-left: auto; /* Diğer elementlerden uzaklaştırarak sağ köşeye alır */
+}

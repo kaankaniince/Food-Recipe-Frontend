@@ -1,41 +1,41 @@
 .card {
-    height: 400px; /* Kart yüksekliği */
+    height: 400px; /* Card height */
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* İçeriği aşağıya hizalar */
-    align-items: flex-start; /* İçeriği sola hizalar */
-    background-size: cover;
-    background-position: center;
-    padding: 16px; /* İçeriklerin kenarlara yapışmasını önlemek için padding */
-    position: relative; /* Konumlandırma yapabilmek için relative ekledim */
+    justify-content: flex-end; /* Align content to the bottom */
+    align-items: flex-start; /* Align content to the left */
+    background-size: cover; /* Make the background image cover the entire card */
+    background-position: center; /* Center the background image */
+    padding: 16px; /* Prevent content from sticking to the edges */
+    position: relative; /* Enable absolute positioning for child elements */
+    overflow: hidden; /* Hide any overflow from the card */
+}
+
+.textContainer {
+    position: absolute; /* Positioning relative to the card */
+    top: 16px; /* Space from the top */
+    left: 16px; /* Space from the left */
+    z-index: 1; /* Ensure text is above the image */
 }
 
 .title {
     font-family: Greycliff CF, sans-serif;
     font-weight: 900;
-    color: var(--mantine-color-white);
+    color: var(--mantine-color-red-7);
     line-height: 1.2;
-    font-size: 24px; /* Rem değerini px ile değiştirdim */
+    font-size: 24px;
     margin-top: var(--mantine-spacing-xs);
 }
 
-@media (max-width: 912px) {
-    .card {
-        padding: 8px; /* Mobilde padding'i küçült */
-    }
-}
-
 .category {
-    color: var(--mantine-color-white);
+    color: var(--mantine-color-black);
     opacity: 0.7;
     font-weight: 700;
     text-transform: uppercase;
 }
 
-/* Read Recipe butonunu sol alt köşeye konumlandırma */
 .card button {
-    position: absolute; /* Butonu konumlandırmak için absolute kullan */
-    bottom: 16px; /* Alt kenardan 16px boşluk bırak */
-    left: 16px; /* Sol kenardan 16px boşluk bırak */
-    align-self: auto; /* Flex hizalamayı etkisiz hale getir */
+    position: absolute; /* Position button relative to card */
+    bottom: 16px; /* Space from the bottom */
+    left: 16px; /* Space from the left */
 }

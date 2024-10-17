@@ -3,7 +3,7 @@ import {FaHeart, FaHome, FaSignInAlt, FaSignOutAlt, FaFileSignature } from "reac
 import {GiMeal} from "react-icons/gi";
 import {useNavigate} from 'react-router-dom';
 import classes from './Navbar.module.css';
-import {useAuth} from "../../Context/AuthContext.tsx";
+import {useAuth} from "../../Store/AuthContext.tsx";
 
 function Navbar() {
     const {isAuthenticated, logout} = useAuth(); // Get authentication state and logout function

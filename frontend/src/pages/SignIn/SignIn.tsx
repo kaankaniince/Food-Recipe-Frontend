@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../../Context/AuthContext'; // Import the authentication context
+import { useAuth } from '../../Store/AuthContext'; // Import the authentication context
 import classes from './SignIn.module.css';
 
 function SignIn() {

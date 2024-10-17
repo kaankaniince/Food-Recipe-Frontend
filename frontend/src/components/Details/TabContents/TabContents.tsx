@@ -3,30 +3,18 @@ import { Box, Text, Group, rem } from '@mantine/core';
 import { IconListSearch } from '@tabler/icons-react';
 import classes from './TabContents.module.css';
 
-const links = [
-    { label: 'Usage', link: '#usage', order: 1 },
-    { label: 'Position and placement', link: '#position', order: 1 },
-    { label: 'With other overlays', link: '#overlays', order: 1 },
-    { label: 'Manage focus', link: '#focus', order: 1 },
-    { label: 'Examples', link: '#1', order: 1 },
-    { label: 'Show on focus', link: '#2', order: 2 },
-    { label: 'Show on hover', link: '#3', order: 2 },
-    { label: 'With form', link: '#4', order: 2 },
-];
+interface TabContentsProps {
+    ingredients: string[];
+}
 
-const active = '#overlays';
-
-export default function TabContents() {
-    const items = links.map((item) => (
-        <Box<'a'>
-            component="a"
-            href={item.link}
-            onClick={(event) => event.preventDefault()}
-            key={item.label}
-            className={cx(classes.link, { [classes.linkActive]: active === item.link })}
-            style={{ paddingLeft: `calc(${item.order} * var(--mantine-spacing-md))` }}
+export default function TabContents({ ingredients }: TabContentsProps) {
+    // Map through the ingredients and create a list of items
+    const items = ingredients.map((ingredient, index) => (
+        <Box<'div'>
+            key={index}
+            className={cx(classes.link)}
         >
-            {item.label}
+            {ingredient}
         </Box>
     ));
 
@@ -34,9 +22,13 @@ export default function TabContents() {
         <div>
             <Group mb="md">
                 <IconListSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                <Text>Table of contents</Text>
+                <Text>Ingredients List</Text>
             </Group>
-            {items}
+
+            {/* Use Stack component to display items vertically */}
+            <div>
+                {items}
+            </div>
         </div>
     );
 }

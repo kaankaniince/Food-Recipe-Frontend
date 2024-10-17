@@ -1,28 +1,31 @@
-import { Timeline, Text } from '@mantine/core';
-import { IconGitBranch, IconGitPullRequest, IconGitCommit, IconMessageDots } from '@tabler/icons-react';
+import {Timeline, Text, Box} from '@mantine/core';
 
-export default function TimelineComponent(){
+interface TimelineComponentProps {
+    instructions: string[];
+}
+
+export default function TimelineComponent({instructions}: TimelineComponentProps) {
     return (
         <Timeline active={1} bulletSize={24} lineWidth={2}>
-            <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">
-                <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
-                <Text size="xs" mt={4}>2 hours ago</Text>
-            </Timeline.Item>
-
-            <Timeline.Item bullet={<IconGitCommit size={12} />} title="Commits">
-                <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to<Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
-                <Text size="xs" mt={4}>52 minutes ago</Text>
-            </Timeline.Item>
-
-            <Timeline.Item title="Pull request" bullet={<IconGitPullRequest size={12} />} lineVariant="dashed">
-                <Text c="dimmed" size="sm">You&apos;ve submitted a pull request<Text variant="link" component="span" inherit>Fix incorrect notification message (#187)</Text></Text>
-                <Text size="xs" mt={4}>34 minutes ago</Text>
-            </Timeline.Item>
-
-            <Timeline.Item title="Code review" bullet={<IconMessageDots size={12} />}>
-                <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
-                <Text size="xs" mt={4}>12 minutes ago</Text>
-            </Timeline.Item>
+            {/* Map through the instructions array and display each instruction in a timeline item */}
+            {instructions.map((instruction, index) => (
+                <Timeline.Item
+                    key={index}
+                    bullet={
+                        <Box>
+                            <Text
+                                size="xs">
+                                {index + 1}
+                            </Text>
+                        </Box>
+                    }
+                    title={`Step ${index + 1}`}
+                >
+                    <Text c="dimmed" size="sm">
+                        {instruction}
+                    </Text>
+                </Timeline.Item>
+            ))}
         </Timeline>
     );
 }

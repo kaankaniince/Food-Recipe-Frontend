@@ -19,7 +19,7 @@ function BasicAppShell() {
                     <Header />
                     <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />
                 </Group>
-            </AppShell.Header>
+            </AppShell.Header> {/*Headerı silip, sadece divider falan ile ayarlayabilirim.*/}
 
             <AppShell.Navbar  >
                 <Navbar/>

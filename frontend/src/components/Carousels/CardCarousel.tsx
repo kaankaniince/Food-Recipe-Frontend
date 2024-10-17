@@ -1,99 +1,89 @@
-import {Carousel} from '@mantine/carousel';
-import {useMediaQuery} from '@mantine/hooks';
-import {Paper, Text, Title, Button, useMantineTheme} from '@mantine/core';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Carousel } from '@mantine/carousel';
+import { useMediaQuery } from '@mantine/hooks';
+import { Paper, Text, Title, Button, useMantineTheme } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 import classes from './CardCarousel.module.css';
 import '@mantine/carousel/styles.css';
 
-interface CardProps {
+interface Recipe {
+    createdAt: string | number | Date;
+    _id: string;
     image: string;
     title: string;
-    category: string;
+    description: string;
+    u_id: {
+        userName: string;
+    };
 }
 
-function Card({image, title, category}: CardProps) {
+interface CardProps {
+    recipe: Recipe; // Adjust to use the Recipe type
+}
+
+function Card({ recipe }: CardProps) {
+    const navigate = useNavigate();
+
     return (
         <Paper
             shadow="md"
-            p="xl"
             radius="md"
-            style={{backgroundImage: `url(${image})`}}
+            style={{ backgroundImage: `url(http://localhost:8080/${recipe.image})` }}
             className={classes.card}
         >
-            <div>
-                <Text className={classes.category} size="xs">
-                    {category}
-                </Text>
+            <div className={classes.textContainer}>
                 <Title order={3} className={classes.title}>
-                    {title}
+                    {recipe.title}
                 </Title>
+                <Text className={classes.category} size="xs" lineClamp={2}>
+                    {recipe.description}
+                </Text>
             </div>
-            <Button variant="white" color="dark">
-                Read Recipe
+            <Button variant="white" color="dark" onClick={() => navigate(`/details/${recipe._id}`)}>
+                Go to Recipe
             </Button>
         </Paper>
     );
 }
 
-const data = [
-    {
-        image:
-            'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Best forests to visit in North America',
-        category: 'nature',
-    },
-    {
-        image:
-            'https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Hawaii beaches review: better than you think',
-        category: 'beach',
-    },
-    {
-        image:
-            'https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Mountains at night: 12 best locations to enjoy the view',
-        category: 'nature',
-    },
-    {
-        image:
-            'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Aurora in Norway: when to visit for best experience',
-        category: 'nature',
-    },
-    {
-        image:
-            'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Best places to visit this winter',
-        category: 'tourism',
-    },
-    {
-        image:
-            'https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-        title: 'Active volcanos reviews: travel at your own risk',
-        category: 'nature',
-    },
-];
-
 function CardsCarousel() {
     const theme = useMantineTheme();
-    const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`); // Mobil ekranları kontrol etme
-    const slides = data.map((item) => (
-        <Carousel.Slide key={item.title}>
-            <Card {...item} />
+    const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
+    const [recipes, setRecipes] = useState<Recipe[]>([]); // Adjusted state type
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/recipes');
+                const sortedRecipes = response.data.sort((a: Recipe, b: Recipe) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                setRecipes(sortedRecipes.slice(0, 8));
+            } catch (error) {
+                console.error('Error fetching recipes:', error);
+            }
+        };
+
+        fetchRecipes();
+    }, []);
+
+    const slides = recipes.map((recipe) => ( // Directly use recipe instead of item
+        <Carousel.Slide key={recipe._id}>
+            <Card recipe={recipe} /> {/* Pass recipe as a prop */}
         </Carousel.Slide>
     ));
 
     return (
         <Carousel
-            ml={20}
-            mr={20}
-            slideSize={mobile ? '100%' : '50%'} // Mobilde tek slide gösterimi
+            ml={mobile ? 10 : 20}
+            mr={mobile ? 8 : 20}
+            slideSize={mobile ? '100%' : '50%'}
             slideGap="sm"
             align="start"
             loop
-            slidesToScroll={1} // Mobilde birer kaydırma
+            slidesToScroll={1}
             styles={{
                 control: {
-                    backgroundColor: 'whitesmoke', // Sağ ve sol ok butonlarını beyaz yap
+                    backgroundColor: 'whitesmoke',
                 },
             }}
         >

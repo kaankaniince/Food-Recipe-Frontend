@@ -2,7 +2,7 @@ import {Group, UnstyledButton, useComputedColorScheme, useMantineColorScheme} fr
 import {FaFileSignature, FaHeart, FaHome, FaMoon, FaSignInAlt, FaSignOutAlt, FaSun} from 'react-icons/fa';
 import {GiMeal} from 'react-icons/gi';
 import {useNavigate} from 'react-router-dom';
-import {useAuth} from '../../Context/AuthContext.tsx'; // Import the authentication context
+import {useAuth} from '../../Store/AuthContext.tsx'; // Import the authentication context
 import classes from './Header.module.css';
 
 function Header() {
