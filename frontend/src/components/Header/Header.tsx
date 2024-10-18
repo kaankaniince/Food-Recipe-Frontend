@@ -6,7 +6,7 @@ import {useAuth} from '../../Store/AuthContext.tsx'; // Import the authenticatio
 import classes from './Header.module.css';
 
 function Header() {
-    const {isAuthenticated, logout} = useAuth(); // Get authentication state and logout function
+    const {isAuthenticated, logout, loading} = useAuth(); // Get authentication state and logout function
     let navigate = useNavigate();
     const {setColorScheme} = useMantineColorScheme();
     const computedColorScheme = useComputedColorScheme('light');
@@ -14,6 +14,11 @@ function Header() {
     const toggleColorScheme = () => {
         setColorScheme(computedColorScheme === 'dark' ? 'light' : 'dark');
     };
+
+    if (loading) {
+        // Show a loading indicator while checking authentication status
+        return <div></div>;
+    }
 
     return (
         <Group h="100%" px="xl" justify="space-between" style={{flex: 1}}>
@@ -34,7 +39,7 @@ function Header() {
                     <FaHeart size={14} style={{color: 'red'}}/> Favorites
                 </UnstyledButton>
                 <UnstyledButton className={classes.control} onClick={() => navigate('/recipes')}>
-                    <GiMeal size={14}/> Recipes
+                    <GiMeal size={14}/>My Recipes
                 </UnstyledButton>
             </Group>
 

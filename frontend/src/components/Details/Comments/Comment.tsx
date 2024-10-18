@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Text, Avatar, Group, TypographyStylesProvider, Paper, Rating, ActionIcon, TextInput, Button } from '@mantine/core';
-import { IconTrash, IconPencil, IconCheck, IconX } from "@tabler/icons-react";
+import {useState} from 'react';
+import {Text, Avatar, Group, TypographyStylesProvider, Paper, Rating, ActionIcon, TextInput} from '@mantine/core';
+import {IconTrash, IconPencil, IconCheck, IconX} from "@tabler/icons-react";
 import classes from './Comment.module.css';
 import axios from 'axios';
 
@@ -14,14 +14,14 @@ type CommentProps = {
     onUpdate: (id: string, newContent: string, newRating: number) => void;
 };
 
-export default function Comment({ c_id, userName, timestamp, rating, content, onDelete, onUpdate }: CommentProps) {
+export default function Comment({c_id, userName, timestamp, rating, content, onDelete, onUpdate}: CommentProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(content);
     const [editedRating, setEditedRating] = useState(rating);
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:8080/comment-rating/${c_id}`, { withCredentials: true });
+            await axios.delete(`http://localhost:8080/comment-rating/${c_id}`, {withCredentials: true});
             onDelete(c_id);
         } catch (error) {
             console.error('Error deleting comment:', error);
@@ -41,8 +41,8 @@ export default function Comment({ c_id, userName, timestamp, rating, content, on
     const handleSaveEdit = async () => {
         try {
             await axios.put(`http://localhost:8080/comment/${c_id}`,
-                { comment: editedContent, rating: editedRating },
-                { withCredentials: true }
+                {comment: editedContent, rating: editedRating},
+                {withCredentials: true}
             );
             onUpdate(c_id, editedContent, editedRating);
             setIsEditing(false);
@@ -73,25 +73,25 @@ export default function Comment({ c_id, userName, timestamp, rating, content, on
                         fractions={2}
                     />
                 ) : (
-                    <Rating className={classes.rating} value={rating} readOnly fractions={4} />
+                    <Rating className={classes.rating} value={rating} readOnly fractions={4}/>
                 )}
 
                 {isEditing ? (
                     <>
                         <ActionIcon color="green" onClick={handleSaveEdit}>
-                            <IconCheck size={18} />
+                            <IconCheck size={18}/>
                         </ActionIcon>
                         <ActionIcon color="red" onClick={handleCancelEdit}>
-                            <IconX size={18} />
+                            <IconX size={18}/>
                         </ActionIcon>
                     </>
                 ) : (
                     <>
                         <ActionIcon color="#FF8C00" onClick={handleEdit}>
-                            <IconPencil size={18} />
+                            <IconPencil size={18}/>
                         </ActionIcon>
                         <ActionIcon color="red" onClick={handleDelete}>
-                            <IconTrash size={18} />
+                            <IconTrash size={18}/>
                         </ActionIcon>
                     </>
                 )}

@@ -1,44 +1,49 @@
+// authContext.tsx
+
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import axios from 'axios';
-// Define the shape of the context value
+
 interface AuthContextType {
     isAuthenticated: boolean;
+    loading: boolean; // Add loading state
     login: () => void;
     logout: () => void;
 }
 
-// Create the context with a default value of null
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Define the props for the AuthProvider component
 interface AuthProviderProps {
-    children: ReactNode; // Ensure children is of type ReactNode
+    children: ReactNode;
 }
 
-// Function to get a specific cookie by name
-// @ts-ignore
-const getCookie = (name: string): string | null => {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null; // Returns the cookie value or null
-};
-
-// AuthProvider component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true); // Loading starts as true
 
-    // Check for the cookie on initial load
+    // Check authentication status on page load
     useEffect(() => {
-        const c = document.cookie;
-        console.log(window)
-        setIsAuthenticated(!!c); // Update state based on cookie presence
+        const checkAuthStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/auth/verify', { withCredentials: true });
+                if (response.status === 200) {
+                    setIsAuthenticated(true); // Authenticated
+                } else {
+                    setIsAuthenticated(false); // Not authenticated
+                }
+            } catch (error) {
+                setIsAuthenticated(false); // Not authenticated on error
+            } finally {
+                setLoading(false); // Stop loading after check
+            }
+        };
+
+        checkAuthStatus();
     }, []);
 
-    // Simulated login function (replace with your actual login logic)
     const login = () => {
         setIsAuthenticated(true);
     };
 
-    // Logout function connected to the backend
     const logout = async () => {
         try {
             await axios.post('http://localhost:8080/auth/logout', {}, { withCredentials: true });
@@ -49,17 +54,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-// Custom hook to use the AuthContext
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
-    if (context === null) {
+    if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
 };
+
+export default AuthContext;

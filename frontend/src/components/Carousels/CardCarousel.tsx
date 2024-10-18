@@ -29,7 +29,8 @@ function Card({ recipe }: CardProps) {
         <Paper
             shadow="md"
             radius="md"
-            style={{ backgroundImage: `url(http://localhost:8080/${recipe.image})` }}
+            //style={{ backgroundImage: `url(http://localhost:8080/${recipe.image})` }}
+            style={{ backgroundImage: `url(${recipe.image})` }}
             className={classes.card}
         >
             <div className={classes.textContainer}>

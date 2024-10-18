@@ -11,7 +11,7 @@ import {
     Group,
     Button,
 } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../Store/AuthContext'; // Import the authentication context
 import classes from './SignIn.module.css';
@@ -22,6 +22,9 @@ function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleRegister = () => {
         navigate('/register');
@@ -39,7 +42,7 @@ function SignIn() {
 
             if (response.status === 200) {
                 login(); // Call login function from context
-                navigate('/'); // Redirect on successful login
+                navigate(from, { replace: true }); // Redirect on successful login
             }
         } catch (error) {
             setError('Invalid email or password. Please try again.');
